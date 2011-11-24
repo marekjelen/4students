@@ -1,0 +1,23 @@
+cz:
+    public:
+        user: Uživatel
+        username: Uživatelské jméno
+        password: Heslo
+        login_remember: Zapamatovat si toto přihlášení
+        project_about: O Projektu
+        project_about_text: Text o projektu
+        legal: Podmínky registrace
+        logged_in_as: Jste přihlášen jako <b>{{user}}</b>.<br />
+        enter_profile: Do vašeho profilu vstoupíte <a href="{{link}}">zde</a>.<br />
+        logout: Nebo se můžete <a href="{{link}}">odhlásit</a>.
+        history: Historie
+        reg:
+            create_user: Vytvoření nového uživatele
+            username: Přihlašovací jméno
+            password: Přihlašovací heslo
+            password_confirmation: Ověření hesla
+            name: Vaše jméno
+            surname: Vaše příjmení
+            email: Platný e-mail
+            register: Dokončit registraci
+            errors: Při zpracování Vaší registrace došlo k chybám. Před pokračováním je, prosím, opravte.

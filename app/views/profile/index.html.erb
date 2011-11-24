@@ -1,0 +1,50 @@
+<div style="float: left">
+  <% @user.profile.sections.each do |section| %>
+    <%
+      text = "#{section.title} [ #{link_to 'Odebrat sekci', :action => 'section_delete', :id => section.id} ]"
+    %>
+    <% partial 'shared/lista', :text => text, :size => 'large' do %>
+      <table>
+        <% section.items.each do |item| %>
+          <tr>
+            <td><%= item.title %></td>
+            <td><%= item.value %></td>
+            <td>[ <%= link_to 'Odebrat', :action => 'item_delete', :id => item.id %> ]</td>
+          </tr>
+        <% end %>
+        <tr>
+          <td colspan="2">
+              <div style="clear: both;">[ <%= link_to 'Přidat údaj', :action => 'item_add', :id => section.id %> ]</div>
+          </td>
+        </tr>
+      </table>
+    <% end %>
+  <% end %>
+  <div style="clear: both;">[ <%= link_to 'Přidat sekci', :action => 'section_add' %> ]</div>
+</div>
+<div style="float: right">
+  <% partial 'shared/lista', :title => 'profile.history.public.title', :size => 'small' do %>
+    <% form_tag :controller => 'profile', :action => 'public_history' do %>
+      <!--
+      <div>
+        <p>
+          <%= I18n.t 'profile.history.public.warning' %>
+        </p>
+      </div>
+      -->
+      <table>
+        <% @historytypes.each do |type| %>
+          <tr>
+            <td><%= image_tag "icons/#{type[0]}.png" %></td>
+            <td width="10"><%= check_box_tag 'types[]', type[0], type[1]%></td>
+            <td><%=I18n.t "profile.history.public.items.#{type[0]}" %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td></td>
+          <td colspan="2" align="center"><%= submit_tag I18n.t('profile.history.public.submit') %> </td>
+        </tr>
+      </table>
+    <% end %>
+  <% end %>
+</div>

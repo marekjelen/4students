@@ -1,0 +1,15 @@
+cz:
+  flash:
+    status:
+      changed: Status byl změněn
+    friendships:
+      yourself: Nelze do přátel přidat sám sebe
+      not_found: Uživatel neexistuje
+      exists: Již jste prátelé
+      requested: O přátelství bylo požádáno
+      request_not_found: Neplatná žádost o přátelstí
+      accespted: Přátelství schváleno
+      rejected: Přátelství odmítnuto
+      request_cancled: Žádost byla zrušena
+      cancled: Přátelství zrušeno
+

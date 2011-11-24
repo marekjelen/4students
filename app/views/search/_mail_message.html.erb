@@ -1,0 +1,9 @@
+<div style="border: 1px solid silver;margin-bottom:5px;">
+  <div style="border-bottom: 1px solid silver;padding:5px;">
+	  Odesílatel: <%= mail_message.sender.display %><br/>
+	  Přijemce: <%= mail_message.recipients_string %><br/>
+	  Datum: <%= mail_message.created_at %><br/>
+	  <b>Předmět: <%= mail_message.subject %></b><br/>
+  </div>
+  <div style="padding:5px;"><%= mail_message.body %></div>
+</div>

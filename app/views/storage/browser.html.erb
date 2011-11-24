@@ -1,0 +1,80 @@
+<%# Includes specific header information for this view %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "jquery.colorbox/jquery.colorbox" %>
+  <%= stylesheet_link_tag "jquery.colorbox/colorbox" %>
+  <!--[if IE]><%= stylesheet_link_tag "jquery.colorbox/colorbox-ie" %><![endif]-->
+  <%= javascript_include_tag "jquery.colorbox" %>
+  <%= javascript_include_tag "swfupload" %>
+  <%= javascript_include_tag "swfupload.queue" %>
+  <%= javascript_include_tag "swfupload.cookies" %>
+  <% javascript_tag do %>
+    $(document).data("folder",<%= @folder.id %>);
+  <% end %>
+  <style type="text/css">
+    #startUpload, #newFolder, #uploadFiles{
+      cursor: pointer;
+    }
+  </style>
+<% end %>
+<% partial 'shared/lista', :text => 'Nástroje', :size => 'little' do %>
+  <table width="100%">
+    <tr id="newFolder">
+      <td><%= image_tag 'icons/folder_add.png' %></td>
+      <td>Nová složka</td>
+    </tr>
+    <tr id="uploadFiles">
+      <td><%= image_tag 'icons/upload.png' %></td>
+      <td>Nahrát soubory</td>
+    </tr>
+  </table>
+<% end %>
+<% partial 'shared/lista', :text => "#{@folder.name}", :size => 'large' do %>
+  <table summary="Obsah složky <%=@folder.name%>" width="100%">
+    <% if @folder.parent %>
+      <tr>
+        <td><%= image_tag 'icons/folder.png' %></td>
+        <td><a href="<%= url_for :controller => 'storage', :action => 'browser', :folder => @folder.parent %>">..</a></td>
+        <td>Adresář</td>
+        <td><%= @folder.created_at %></td>
+        <td><%= @folder.updated_at %></td>
+      </tr>
+    <% end %>
+    <% @folders.each do |f| %>
+      <tr>
+        <td><%= image_tag 'icons/folder.png' %></td>
+        <td><a href="<%= url_for :controller => 'storage', :action => 'browser', :folder => f.id %>"><%= f.name %></a></td>
+      </tr>
+    <% end %>
+    <% @files.each do |f| %>
+      <tr>
+        <td><%= image_tag 'icons/page.png' %></td>
+        <td><a href="<%= url_for :controller => 'storage', :action => 'download', :id => f.id %>"><%= f.name %></a></td>
+        <td><%= (f.size.to_i / 1024).round %> Kb</td>
+        <td><%= f.created_at %></td>
+        <td><%= f.updated_at %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+<% partial 'shared/lista', :text => 'Nahrát soubor(y)', :size => 'little' do %>
+<% end %>
+<div style="display: none;">
+  <div id="uploader" style="text-align: left;">
+    <div style="text-align: center;"><h3>Nahrát soubory na server</h3></div>
+    <div><span id="uploadButton"></span></div>
+    <table style="margin-top:5px;">
+      <tr id="startUpload">
+        <td><%= image_tag 'icons/upload.png' %></td>
+        <td>Nahrát vybrané soubory na server</td>
+      </tr>
+    </table>
+    <div id="uploadBox" style="margin-top:5px;">
+    </div>
+    <div style="text-align: justify;margin-top:5px;">
+      <p>Uvidíte průběh nahrávání jednotlivých souborů, po dokončení všech,
+      bude stránka znovu načtena, aby se projevili všechny změny.</p>
+      <p><strong>Pozor:</strong> Pokud tento dialog ukončíte (Zavřít, ESC) bude nahrávání
+      nadále pokračovat. Přejdete-li na jinou stránku, ukončí se.</p>
+    </div>
+  </div>
+</div>

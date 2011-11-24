@@ -1,0 +1,18 @@
+<%
+    title = '' if not title
+    text = I18n.t(title) if not text
+    size  = 'small' if not size
+    float = 'left'  if not float
+    clear = 'none' if not clear
+    box_id = nil if not box_id
+%>
+<div class="<%= size%>_box" style="float: <%= float%>;clear: <%= clear%>;">
+  <div class="box_header"><%= text%></div>
+  <div class="box_content">
+    <div <%="id='#{box_id}'" if box_id%>>
+      <%= yield %>
+    </div>
+    <div style="clear: both;"></div>
+  </div>
+  <div class="box_footer"></div>
+</div>

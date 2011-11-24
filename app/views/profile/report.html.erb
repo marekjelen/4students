@@ -1,0 +1,59 @@
+<% content_for :head do %>
+    <%= stylesheet_link_tag "profile" %>
+<% end %>
+<% partial 'shared/lista', :size => 'large', :title => 'profile.history.title', :float => 'left' do %>
+    <table summary="historie udalosti u spratlenejch uctu">
+      <% @histories.each do |history| %>
+          <tr>
+            <td>
+              <div class="avatar" style="height: 32px;">
+                <% link_to history.user.display, { :controller => :profile, :action => :display, :id => history.user.id }, :class => 'modra' do %><%= image_tag @user.avatar_url %>
+                <% end %></div>
+            </td>
+            <td valign="top">
+              <div style="margin-top: 2px;line-height: 16px;">
+                <%= link_to history.user.display, { :controller => :profile, :action => :display, :id => history.user.id }, :class => 'modra' %>
+                <% if history.options %>
+                    <%= t("history.messages.#{history.key}", Marshal.load(history.options)) %>
+                <% else %>
+                    <%= t("history.messages.#{history.key}") %>
+                <% end %>
+              </div>
+              <div style="color: silver;">&nbsp;&nbsp;&nbsp;<%= time_ago_in_words history.created_at %></div>
+            </td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>
+<% partial 'shared/lista', :title => 'profile.status', :float => 'right' do %>
+    <% form_tag :controller => 'profile', :action => 'status' do %>
+        <div class="status_change">
+          <table summary="Muj status">
+            <tr>
+              <td><%= text_field_tag :status, @user.status %></td>
+              <td><%= image_submit_tag "icons/accept.png", :id => "submit" %></td>
+            </tr>
+          </table>
+        </div>
+    <% end %>
+<% end %>
+<% partial 'shared/lista', :title => 'profile.friends.requests', :float => 'right', :clear => 'right' do %>
+    <% if @requests.length > 0 %>
+        <table summary="zadaji te o pratelstvi">
+          <% @requests.each do |user| %>
+              <tr>
+                <td rowspan="2" valign="top">
+                  <div class="avatar"><%= image_tag @user.avatar_url %></div>
+                </td>
+                <td><b class="modra"><%= user.display %></b></td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="/friends/accept/<%= user.username %>/"><%= image_tag "icons/accept.png" %></a>
+                  <a href="/friends/reject/<%= user.username %>/"><%= image_tag "icons/deny.png" %></a>
+                </td>
+              </tr>
+          <% end %>
+        </table>
+    <% end %>
+<% end %>

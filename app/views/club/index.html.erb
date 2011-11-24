@@ -1,0 +1,51 @@
+<% partial 'shared/lista', :text => @club.name do %>
+  <p><%= @club.description %></p>
+  <p>
+    <% if @club.visible %>
+      Viditelný klub (je v katalogu)
+    <% else %>
+      Neviditelný klub (není vidět v katalogu)
+    <% end %>
+  </p>
+  <p>
+    <% if @club.public and @club.locked %>
+      Členové si musí požádat o členství.
+    <% end %>
+    <% if @club.public and not @club.locked %>
+      Přístupný úplně všem.
+    <% end %>
+    <% if not @club.public and @club.locked %>
+      Členství je nabízeno.
+    <% end %>
+    <% if not @club.public and not @club.locked %>
+      Volné členství.
+    <% end %>
+  </p>
+  <p>
+    <% if @member %>
+      Jste členem klubu ... <%= link_to 'zrušit členství', :action => 'signout', :id => @club.id %>.
+    <% else %>
+      Členství není vyžadováno ... <%= link_to 'přihlásit se', :action => 'join', :id => @club.id %>
+    <% end %>
+  </p>
+<% end %>
+<% partial 'shared/lista', :text => "Zprávy v klubu", :size => 'large' do %>
+  <div>
+    <% form_for :message, ClubMessage.new, :url => { :controller => 'club', :action => 'message', :id => @club.id } do |f| %>
+      <table>
+        <tr>
+          <td>Poslat zprávu</td>
+          <td><%= f.text_field :message %></td>
+          <td><%= f.submit 'Odeslat' %></td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+  <hr />
+  <% @messages.each do |msg| %>
+    <div style="border: 1px solid silver;margin-bottom:5px;">
+      <div style="border-bottom: 1px solid silver;padding:5px;"><b><%= msg.user.display %></b> ( <%= msg.created_at %> )</div>
+      <div style="padding:5px;"><%= msg.message %></div>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,26 @@
+cz:
+  activerecord:
+    errors:
+      template:
+        header: Chyby v zadaných datech
+        body: Nalezli jsme chyby v datech které jste zadali, aby jste mohli pokračovat, musíte je opravit.
+      models:
+        user:
+          attributes:
+            username:
+              taken: Uživatelské jméno již existuje.
+              too_short: Uživatelské jméno musí být delší než 5 znaků.
+              invalid: Uživatelské jméno smí obsahovat jen znaky, čísla a _
+            email:
+              taken: E-mail je již registrován.
+              blank: Musíte zadat e-mail.
+              invalid: Neplatný formát e-mailu.
+            password:
+              confirmation: Heslo nebylo správně zopakováno.
+              too_short: Heslo musí být delší než 5 znaků.
+            name:
+                blank: Jméno musí být zadáno
+            surname:
+                blank: Příjmení musí být zadáno
+
+

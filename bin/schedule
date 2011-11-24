@@ -1,0 +1,70 @@
+# Path to Rails root
+RAILS_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+
+if ARGV.length == 1
+  RAILS_ENV = ARGV[0]
+else
+  RAILS_ENV = 'production'
+end
+
+# Load required gems
+require 'rubygems'
+require 'eventmachine'
+
+# Load Rails application
+require File.join(RAILS_ROOT, 'config', 'boot.rb')
+require File.join(RAILS_ROOT, 'config', 'environment.rb')
+
+module Students
+  module News
+
+    mattr_accessor :ticks
+
+    def self.tick
+      self.ticks ||=0
+      if self.ticks == 300
+        self.ticks = 0
+      end
+      if self.ticks == 0
+        self.run
+      end
+      self.ticks += 1
+    end
+
+    def self.run
+      feeds = Feed.all
+      feeds.each do |feed|
+        parser = XML::Parser.file(feed.url)
+        doc = parser.parse
+        feed.updated_at = DateTime.now
+        feed.save
+        doc.find('/rss/channel/item').each do |item|
+          link = item.find_first('link').inner_xml
+          title = item.find_first('title').inner_xml
+          entry = FeedEntry.find :first, :conditions => { :link => link }
+          if not entry
+            entry = FeedEntry.new
+            entry.feed = feed
+            entry.link = link
+            entry.description = item.find_first('description').inner_xml
+            entry.title = title
+            entry.guid = item.find_first('guid').inner_xml
+            begin
+              entry.published = DateTime.parse(item.find_first('pubDate').inner_xml)
+            rescue ArgumentError => e
+              entry.published = DateTime.new
+            end
+            entry.save
+          end
+        end
+      end
+    end
+
+  end
+end
+
+EventMachine::run {
+  EventMachine::add_periodic_timer( 1 ) do
+    Students::News.tick
+  end
+}

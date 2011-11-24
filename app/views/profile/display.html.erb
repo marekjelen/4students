@@ -1,0 +1,57 @@
+<div style="float: right;">
+  <% partial 'shared/lista', :text => 'Akce', :float => 'right' do %>
+      <table>
+        <tr>
+          <td>
+            <a href="<%= url_for :controller => 'friends', :action => 'add', :id => @u.username %>">Přidat do přátel</a>
+          </td>
+        </tr>
+      </table>
+  <% end %>
+  <% partial 'shared/lista', :text => 'Přátelé', :float => 'right', :clear => 'both' do %>
+      <% @u.friends.each do |friend| %>
+          <div style="float: left;width: 68px;">
+            <table>
+              <tr>
+                <td align="center">
+                  <div class="avatar" style="height: 32px;width: 32px;">
+                    <% link_to( { :controller => :profile, :action => :display, :id => friend.id }, :class => 'modra' ) do %>
+                        <%= image_tag friend.avatar_url %>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td align="center">
+                  <%= link_to( friend.display, { :controller => :profile, :action => :display, :id => friend.id }, :class => 'modra' ) %>
+                </td>
+              </tr>
+            </table>
+          </div>
+      <% end %>
+  <% end %>
+</div>
+<div style="float: left;width:620px;">
+  <% partial 'shared/lista', :text => "Uživatel #{@u.display}", :size => 'large' do %>
+      <div class="avatar" style="float: left;height: 50px;"><%= image_tag @u.avatar_url(:size => 50) %></div>
+      <div style="float: left;padding-left: 10px;padding-top: 10px;">
+        <b>Jméno: </b> <%= @u.display %>
+        <br/>
+        <b>E-mail: </b> <%= @u.email %>
+        <br/>
+        <b>Status: </b> <%= @u.status %>
+      </div>
+  <% end %>
+  <% @u.profile.sections.each do |section| %>
+      <% partial 'shared/lista', :text => section.title, :size => 'large' do %>
+          <table width="100%">
+            <% section.items.each do |item| %>
+                <tr>
+                  <td align="right"><b><%= item.title %></b></td>
+                  <td><%= item.value %></td>
+                </tr>
+            <% end %>
+          </table>
+      <% end %>
+  <% end %>
+</div>

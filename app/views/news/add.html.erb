@@ -1,0 +1,30 @@
+<% form_tag :action => 'add' do %>
+  Adresa zdroje <%= text_field_tag 'link', @link %>
+  <%= submit_tag 'Zkontrolovat' %>
+<% end %>
+<% if @found %>
+  <br />
+  <br />
+  <% form_tag :action => 'register' do %>
+    <%= hidden_field_tag :link, @link %>
+    <%= hidden_field_tag :title, @title %>
+    <%= hidden_field_tag :description, @description %>
+    <table>
+      <tr>
+        <th>Titulek</th>
+        <td><%= @title %></td>
+      </tr>
+      <tr>
+        <th>Adresa</th>
+        <td><%= @web_link %></td>
+      </tr>
+      <tr>
+        <th>Popis</th>
+        <td><%= @description %></td>
+      </tr>
+      <tr>
+        <td colspan="2"><%= submit_tag 'Uložit zdroj' %></td>
+      </tr>
+    </table>
+  <% end %>
+<% end %>

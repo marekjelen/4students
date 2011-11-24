@@ -1,0 +1,31 @@
+<h3>Založení nového klubu</h3>
+<% form_for :club, @club, :url => { :controller => 'clubs', :action => 'create'} do |form| %>
+  <%= form.hidden_field :category_id %>
+  <table>
+    <tr>
+      <td>Jméno</td>
+      <td><%= form.text_field :name %></td>
+    </tr>
+    <tr>
+      <td>Veřejně přístupný</td>
+      <td><%= form.check_box  :public %></td>
+    </tr>
+    <tr>
+      <td>Veřejně viditelný</td>
+      <td><%= form.check_box  :visible %></td>
+    </tr>
+    <tr>
+      <td>Zamčený</td>
+      <td><%= form.check_box  :locked %></td>
+    </tr>
+    <tr>
+      <td>Popis</td>
+      <td><%= form.text_area  :description %></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center">
+        <%= form.submit 'Založit nový klub' %>
+      </td>
+    </tr>
+  </table>
+<% end %>

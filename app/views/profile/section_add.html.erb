@@ -1,0 +1,4 @@
+<% form_tag :action => 'section_create' do %>
+  Jméno sekce <%= text_field_tag :name, flash[:name] %>
+  <%= submit_tag 'Vytvořit' %>
+<% end %>

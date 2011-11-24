@@ -1,0 +1,6 @@
+cz:
+  messages:
+    recipient: Příjemce
+    body: Obsah zprávy
+    inbox: Doručená pošta
+    folders: Složky

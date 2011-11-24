@@ -1,0 +1,70 @@
+<% partial 'shared/box', :title => 'public.legal' do %>
+    <p class="first">Lorem ipsum sit habeo tibique tractatos ei. Aeterno eripuit voluptatibus ei sea, decore dissentiet
+        ad qui, mel eu blandit consetetur. Cum scaevola adipiscing te, cu duis affert eum. Magna prompta urbanitas te
+        vis, aliquid fabellas elaboraret ei usu, ad cum possim aperiri senserit. Ei vel solum alienum conclusionemque,
+        has probo quaerendum et.
+        Ne causae appareat aliquando ius, nam ea causae utroque, vis eius feugiat te. Vix ei alii option. Ea eius
+        fierent eum, meliore reprimique scripserit cu qui. Sit ne utroque instructior, ei usu alia facilisi reformidans,
+        cum vidit offendit delicatissimi eu. Pri scripserit comprehensam ut, ea vix omnis tamquam reprehendunt. Sea an
+        animal imperdiet.
+    </p>
+    <p>Vix semper saperet ei, ea consequat maiestatis vim. Ei vix viderer dolorum, saepe doctus liberavisse eos ut, no
+        usu iisque accusata invenire. Ad duo putent nominati scriptorem, et sit omnium legimus. Id usu sanctus albucius
+        offendit. Vivendum phaedrum explicari ius an, eu novum moderatius scribentur qui.
+        In quo persecuti voluptatibus. Tamquam temporibus id eum. Cibo doming cotidieque cum eu, an pri exerci inermis
+        mandamus. Stet elit vix in, at sed soleat noluisse partiendo, elir putant causae id sea.
+        Verear vivendo deleniti eam ut. Justo saepe corpora ei vix, nonumy utroque ne eum, per phaedrum intellegat cu.
+        Alienum iracundia tincidunt cu qui. Mel harum nullam officiis ex.
+    </p>
+    <p class="last">Eum ei minim elitr eruditi, dicta congue scripserit sit te, tale facilisis argumentum pri te. Id vim
+        tale solum interpretaris, quem maluisset nec ei. Diceret dolorum per ei, an enim latine mediocritatem eam. Sit
+        commodo bonorum ne, mel illud persius no. Sit in quem porro facilisis.</p>
+<% end %>
+<% partial 'shared/box', :size=> 'large', :title => 'public.reg.create_user' do %>
+    <%
+       u = flash[:reg_user]
+       form_for :user, u, :url => {:controller => 'public', :action => 'register'} do |f|
+    %>
+        <!--<%= error_messages_for 'username', :object => u %>-->
+        <% if u %>
+            <% if u.errors %>
+                <strong style="padding: 5px;margin-bottom:10px;display:block;">XXX:<%= I18n.t :'public.reg.errors'%></strong>
+            <% end %>
+        <% end %>
+        <table>
+            <tr>
+                <td><%= I18n.t :'public.reg.username' %></td>
+                <td><%= f.text_field :username %> </td>
+                <td><%= error_message_on u, "username" %></td>
+            </tr>
+            <tr>
+                <td><%= I18n.t :'public.reg.password' %></td>
+                <td><%= f.password_field :password %> </td>
+                <td><%= error_message_on u, "password" %></td>
+            </tr>
+            <tr>
+                <td><%= I18n.t :'public.reg.password_confirmation' %></td>
+                <td><%= f.password_field :password_confirmation %> </td>
+                <td><%= error_message_on u, "password_confirmation" %></td>
+            </tr>
+            <tr>
+                <td><%= I18n.t :'public.reg.name' %></td>
+                <td><%= f.text_field :name %> </td>
+                <td><%= error_message_on u, "name" %></td>
+            </tr>
+            <tr>
+                <td><%= I18n.t :'public.reg.surname' %></td>
+                <td><%= f.text_field :surname %> </td>
+                <td><%= error_message_on u, "surname" %></td>
+            </tr>
+            <tr>
+                <td><%= I18n.t :'public.reg.email' %></td>
+                <td><%= f.text_field :email %> </td>
+                <td><%= error_message_on u, "email" %></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><%= submit_tag(I18n.t(:'public.reg.register')) %> </td>
+            </tr>
+        </table>
+    <% end %>
+<% end %>

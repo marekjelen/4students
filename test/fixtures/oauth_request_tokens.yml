@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  token: MyString
+  secret: MyString
+  request: 
+
+two:
+  token: MyString
+  secret: MyString
+  request: 

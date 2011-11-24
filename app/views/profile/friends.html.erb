@@ -1,0 +1,41 @@
+<% partial 'shared/lista', :title => 'profile.friends.find.title' do %>
+  <table>
+    <% form_tag "/friends/search" do %>
+      <tr>
+        <td><%= I18n.t 'profile.friends.find.username'%>:</td>
+        <td><%= text_field_tag :phrase %> </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">
+          <button type="submit">
+            <table>
+              <tr>
+                <td><%= image_tag "icons/new_friendship.png" %></td>
+                <td> hledej moje přátele</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+<% partial 'shared/lista', :title => 'profile.friends.my' do %>
+  <table>
+    <% @friends.each do |f| %>
+      <tr>
+        <td>
+          <a href="<%= url_for :controller => 'friends', :action => 'cancle', :id => f.group.owner.username %>">
+            <%= image_tag "icons/reject_friendship.png", :title => "Přestat kamarádit" %>
+          </a>
+        </td>
+        <td>
+          <%= link_to f.group.owner.display, :controller => 'profile', :action => 'display', :id => f.group.owner.id %>
+          <% if ! f.active %>
+            ( <%= I18n.t 'profile.friends.request' %>  )
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

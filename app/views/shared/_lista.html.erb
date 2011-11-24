@@ -1,0 +1,16 @@
+<%
+    title = '' if not title
+    text = I18n.t(title) if not text
+    size  = 'small' if not size
+    float = 'left'  if not float
+    weight = 'thin' if not weight
+    clear = 'none' if not clear
+    align = 'left' if not align
+    box_id = nil if not box_id
+%>
+<div class="lista_<%= weight%>_<%= size%>" style="float: <%= float%>; clear: <%= clear%>;">
+  <div class="header"><%= text %></div>
+  <div class="content" <%="id='#{box_id}'" if box_id%> style="text-align: <%= align%>;">
+    <%= yield %>
+  </div>
+</div>

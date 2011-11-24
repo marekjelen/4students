@@ -1,0 +1,39 @@
+<div>
+  <%= link_to "Kluby", :controller => 'clubs', :action => 'browser', :id => nil %>
+  <% @category.ancestors.each do |ancestor| %>
+    <% if ancestor.parent %>
+      :: <%= link_to ancestor.name, :controller => 'clubs', :action => 'browser', :id => ancestor.id %>
+    <% end %>
+  <% end %>
+  :: <%= @category.name %>
+</div>
+<hr />
+<table>
+  <tr>
+    <td><%= image_tag 'icons/folder_add.png' %></td>
+    <td><%= link_to 'Založit nový klub v této kategorii', :controller => 'clubs', :action => 'create', :id => @category.id %></td>
+  </tr>
+</table>
+<hr />
+<table>
+  <% @category.categories.find(:all, :conditions=>{:active => true}).each do |category| %>
+    <tr>
+      <td><%= image_tag 'icons/folder.png' %></td>
+      <td><%= link_to category.name, :controller => 'clubs', :action => 'browser', :id => category.id %></td>
+    </tr>
+  <% end %>
+</table>
+<hr />
+<table>
+  <% @category.clubs.find(:all, :conditions=>{:active => true,:visible => true}).each do |club| %>
+    <tr>
+      <td>
+        <%= image_tag 'icons/club.png' %>
+        <% if club.locked and not club.public %>
+          <%= image_tag "icons/private.png" %>
+        <% end %>
+      </td>
+      <td><%= link_to club.name, :controller => 'club', :action => 'index', :club => club.id %> | <%= club.description %></td>
+    </tr>
+  <% end %>
+</table>

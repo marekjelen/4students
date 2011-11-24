@@ -1,0 +1,8 @@
+<table>
+  <% @members.each do |member| %>
+    <tr>
+      <td><div class="avatar"><%= image_tag member.avatar_url(:size => 50) %></div></td>
+      <td><%= link_to member.display, :controller => 'profile', :action => 'display', :id => member.id %></td>
+    </tr>
+  <% end %>
+</table>

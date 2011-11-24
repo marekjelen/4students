@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  key: MyString
+  secure: MyString
+  consumer_id: 
+  user_id: 
+
+two:
+  key: MyString
+  secure: MyString
+  consumer_id: 
+  user_id: 

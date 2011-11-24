@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <title>Komunity.4Students.CZ</title>
+  <!-- StyleSheets -->
+  <%= stylesheet_link_tag "main" %>
+  <!-- JavaScript -->
+  <%= javascript_include_tag "jquery" %>
+  <%= javascript_include_tag "jquery.md5" %>
+  <%= javascript_include_tag "jquery.ui" %>
+  <%= javascript_include_tag "jquery.json" %>
+  <%= javascript_include_tag "swfobject" %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_action(params[:controller], params[:action]) %>
+  <!-- page specific data -->
+  <%= yield :head %>
+</head>
+<body>
+<div id="container">
+  <div id="header">
+    <div id="profile">
+      <div class="avatar"><%= image_tag @user.avatar_url(:size => 50) %></div>
+      <div class="name">
+            <span class="color">
+              <%= @user.display %><!-- (<%= @user.username %>)-->
+            </span>
+      </div>
+      <div class="status">
+        <% if @user.status and @user.status.length > 0 %>
+            <% if @user.status.length > 30 %>
+                <%= @user.status[0..30] %> ...
+            <% else %>
+                <%= @user.status %>
+            <% end %>
+        <% else %>
+            &nbsp;
+        <% end %>
+      </div>
+      <div class="bottom_left">
+        <table cellpadding="0" cellspacing="0" summary="basic actions">
+          <tr>
+            <td><%= image_tag "icons/eye.png" %></td>
+            <td><a href="<%= url_for :controller => 'profile', :action => 'report' %>"><b>Přehled</b></a></td>
+          </tr>
+          <tr>
+            <td><%= image_tag "icons/email.png" %></td>
+            <td><a href="<%= url_for :controller => 'messages', :action => 'compose' %>"><b>Poslat zprávu</b></a></td>
+          </tr>
+          <!--
+              <tr>
+                <td><%= image_tag "icons/bug.png" %></td>
+                <td><a href="<%= url_for :controller => 'system', :action => 'bugreport' %>"><b>Nahlásit chybu</b></a></td>
+              </tr>
+              -->
+        </table>
+      </div>
+      <div class="bottom_right">
+        <%= image_tag "icons/profile_edit.png" %>
+        <br/>
+        <%= image_tag "icons/help.png" %>
+        <a href="<%= url_for :controller => 'public', :action => 'logout' %>"><%= image_tag "icons/logout.png" %></a>
+      </div>
+    </div>
+    <div id="sections"></div>
+    <div id="logo"></div>
+  </div>
+  <div id="menu">
+    <div class="menu_item_active">
+      <% active_section = @menu.active_section(params) %>
+      <%= active_section.name %>
+      <div class="menu_line"></div>
+      <div class="menu_sub">
+        <div class="sub_left"></div>
+        <% active_section.actions.each do |action| %>
+            <% if action.is_active?(params) %>
+                <div class="menu_sub_item">
+                  <a href="<%= url_for action.options %>"><b><%= action.name %></b></a>
+                </div>
+            <% else %>
+                <div class="menu_sub_item"><%= link_to action.name, action.options %></div>
+            <% end %>
+        <% end %>
+        <div class="sub_right"></div>
+      </div>
+    </div>
+
+    <% @menu.sections.each do |section| %>
+        <% if active_section != section %>
+            <div class="menu_item">
+              <%= link_to section.name, section.options %>
+            </div>
+        <% end %>
+    <% end %>
+
+    <% if flash[:message] %>
+        <div class="menu_info">
+          <div class="sub_left"></div>
+          <div class="menu_sub_item">
+            <table cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+                <td valign="middle"><%= I18n.t "flash.#{flash[:message]}" %></td>
+                <% flash[:icon] ||= 'info' %>
+                <td>&nbsp;&nbsp;</td>
+                <td><img src='/images/icons/<%= flash[:icon] %>.png'/></td>
+              </tr>
+            </table>
+          </div>
+          <div class="sub_right"></div>
+        </div>
+    <% end %>
+    <div class="clear"></div>
+  </div>
+  <div id="content">
+    <%= yield %>
+  </div>
+</div>
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-4054927-1");
+        pageTracker._setDomainName(".4students.cz");
+        pageTracker._initData();
+        pageTracker._trackPageview();
+    } catch(err) {
+    }
+</script>
+</body>
+</html>

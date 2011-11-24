@@ -1,0 +1,15 @@
+<% partial 'shared/lista', :text => 'Zdroje' do %>
+    <div><%= link_to 'Všechny zdroje', :controller => 'news', :action => 'index', :id => nil %></div>
+    <% @feeds.each do |feed| %>
+        <div><%= link_to feed.title, :id => feed.id %></div>
+    <% end %>
+<% end %>
+<div style="float: right;width: 620px;">
+  <% coder = HTMLEntities.new %>
+  <% @entries.each do |entry| %>
+      <% partial 'shared/lista', :text => link_to(entry.title, entry.link, { :target => 'blank', :style => 'color: #0078D8;font-wight: bold;' }), :size => 'large' do %>
+          <p>Publikováno na <strong><%= entry.feed.title %></strong> před <strong><%= time_ago_in_words(entry.published) %></strong>.</p>
+          <p><%= coder.decode entry.description %></p>
+      <% end %>
+  <% end %>
+</div>

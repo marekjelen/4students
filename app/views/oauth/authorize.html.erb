@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <title>Komunity.4Students.CZ</title>
+  <link REL="SHORTCUT ICON" HREF="/favicon.ico">
+  <!-- StyleSheets -->
+  <%= stylesheet_link_tag "main" %>
+  <%= stylesheet_link_tag "login" %>
+  <%= yield :styles %>
+  <!-- JavaScript -->
+  <%= javascript_include_tag "jquery" %>
+  <%= javascript_include_tag "swfobject" %>
+  <%= javascript_include_tag "application" %>
+</head>
+<body>
+<div id="container">
+  <div id="header">
+    <div id="sections"></div>
+    <div id="logo"></div>
+  </div>
+  <div id="content">
+    <div style="float:left;width:310px;margin-left: 310px;">
+      <% partial 'shared/lista', :title => 'public.user' do %>
+          <% form_tag(:controller => 'oauth', :action => 'authorize2', :oauth_token => params[:oauth_token], :oauth_callback => params[:oauth_callback]) do %>
+              <div style="text-align: center;margin-bottom: 10px;">
+                <% if params[:loginFailed] == 'yes' %>
+                    <strong>Přihlášení se nezdařilo.</strong>
+                <% end %>
+              </div>
+              <table summary="Table design for login form" id="login_table" style="width:100%;">
+                <tr>
+                  <td><strong><%= I18n.t :'public.username' %>:</strong></td>
+                  <td><%= text_field_tag 'username' %></td>
+                </tr>
+                <tr>
+                  <td><strong><%= I18n.t :'public.password' %>:</strong></td>
+                  <td><%= password_field_tag 'password' %> </td>
+                </tr>
+                <tr>
+                  <td colspan="2" align="center"><%= image_submit_tag('login.gif') %></td>
+                </tr>
+              </table>
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+</body>
+</html>

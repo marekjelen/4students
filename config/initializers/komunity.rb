@@ -1,0 +1,2 @@
+SYSTEM_VERSION = 3
+DATA_ROOT = "#{RAILS_ROOT}/../_data"

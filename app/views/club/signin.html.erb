@@ -1,0 +1,8 @@
+<b><%= @club.name %></b>
+<p><%= @club.description %></p>
+<% if not @club.locked and not @club.public %>
+  <p><b><%= link_to 'Chci požádat o členství v klubu', :action => 'join', :id => @club.id %>.</b></p>
+<% end %>
+<% if ( not @club.locked ) and @club.public %>
+  <p><b><%= link_to 'Chci založit členství v klubu', :action => 'join', :id => @club.id %>.</b></p>
+<% end %>

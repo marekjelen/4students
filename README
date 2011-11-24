@@ -1,0 +1,5 @@
+Gems:
+    ferret
+    json
+    mislav-will_paginate from http://gems.github.com
+    libxml-ruby

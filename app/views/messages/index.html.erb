@@ -1,0 +1,190 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "jquery.colorbox/jquery.colorbox" %>
+  <%= stylesheet_link_tag "jquery.colorbox/colorbox" %>
+  <!--[if IE]><%= stylesheet_link_tag "jquery.colorbox/colorbox-ie" %><![endif]-->
+  <%= javascript_include_tag "jquery.colorbox" %>
+  <style type="text/css">
+    th { font-weight: bold; }
+    .indent { padding-left: 10px; }
+    .message_row { cursor: pointer; }
+    .context_menu .item{
+      border: 1px #D5E4FE solid;
+      padding: 2px;
+      background-color: #FFFFFF;
+      cursor: pointer;
+    }
+    .context_menu .item:hover{
+      background-color: #D5E4FE;
+    }
+    .ui-draggable-dragging{
+      border: 1px #D5E4FE solid;
+    }
+    .ui-drappable{
+
+    }
+    .messagedrop td{
+      border: 1px #D5E4FE solid;
+    }
+    .messagehover .folder_name{
+      background-color: #D5E4FE;
+    }
+    .folder_name{
+      padding-left: 5px;
+    }
+  </style>
+  <script type="text/javascript">
+    // After page load
+    $(document).ready(function(){
+      // Each row
+      $(".message_row").click(function(){
+        row = $(this);
+        id = row.attr('id').replace('message_', '');
+        url = '<%= url_for :controller => 'messages', :action => 'message'%>/' + id;
+        $.getJSON(url, function(data){
+          var m = $('#msgboxed');
+          m.text('');
+          var md = $('<div/>').attr('id','msgboxeddata');
+          md.append($("<div/>").html('<strong>Zpráva:</strong> ' + data['subject'] + '<br/> <strong>Odesílatel:</strong> ' + data['from'] + '<br/><br/>'));
+          md.append($('<div/>').text(data['body']));
+          md.css('text-align', 'left');
+          m.append(md);
+          $('<a/>').colorbox({
+            fixedWidth: "50%",
+            inline: true,
+            href: "#msgboxeddata",
+            open: true
+          });
+
+        });
+      });
+      $(".message_row").bind("contextmenu", function(e){
+        $("#messageMenu").show().css({
+          top:e.pageY+"px",
+          left:e.pageX+"px",
+          position:"absolute"
+        });
+        $(document).bind("click",function(e){
+          $("#messageMenu").hide();
+        });
+        $('#messageMenu .delete').click(function(){
+          alert('test');
+          $(this).unbind('click');
+        });
+        return false;
+      });
+      $(".folder_row").bind("contextmenu", function(e){
+        $("#folderMenu").show().css({
+          top:e.pageY+"px",
+          left:e.pageX+"px",
+          position:"absolute"
+        });
+        $(document).bind("click",function(e){
+          $("#folderMenu").hide();
+        });
+        return false;
+      });
+      $(".message_row").draggable({
+        cursor: 'pointer',
+        helper: 'clone'
+      });
+      $(".folder_row").droppable({
+        accept: ".message_row",
+        tolerance: 'pointer',
+        hoverClass: 'messagehover',
+        drop: function(event, ui) {
+          url = '<%= url_for :controller => 'messages', :action => 'move' %>';
+          url = url + '/' + ui.draggable.attr('id').replace('message_', '');
+          url = url + '/' + $(this).attr('id').replace('folder_', '');
+          window.location = url;
+        }
+      });
+      $('#new_folder').click(function(){
+        name = prompt("Zadej jméno nové složky", "");
+        if(name != null){
+          window.location = '<%= url_for :controller => 'messages', :action => 'new_folder' %>/' + name;
+        }
+      });
+    });
+  </script>
+<% end %>
+<% partial 'shared/box', :title => 'messages.folders', :size => 'small' do %>
+  <table style="width: 100%;">
+    <% @folders.each do |folder| %>
+      <tr class="folder_row" id="folder_<%=folder.id%>">
+        <td style="width: 16px;"><%=image_tag 'icons/mail_folder_'+folder.type+'.png' %></td>
+        <%  if folder == @folder %>
+          <td class="folder_name"><a href="<%=url_for :controller => 'messages', :action => 'index', :id => folder.id%>"><b><%=folder.title %></b></a></td>
+        <% else %>
+          <td class="folder_name"><a href="<%=url_for :controller => 'messages', :action => 'index', :id => folder.id%>"><%=folder.title %></a></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  <hr />
+  <table id="new_folder" style="cursor: pointer;">
+    <td><%=image_tag 'icons/folder_add.png' %></td>
+    <td>Vytvořit novou složku</td>
+  </table>
+<% end %>
+<% partial 'shared/box', :text => @folder.title, :size => 'large' do %>
+  <div style="margin-left: 10px;padding-bottom: 10px;">
+    <div style="margin-bottom: 5px;">
+      <% if @folder.type == 'outbox' %>
+        <div style="float: left;width:200px;font-weight: bold;">Příjemce</div>
+      <% else %>
+        <div style="float: left;width:200px;font-weight: bold;">Odesílatel</div>
+      <% end %>
+      <div style="float: left;font-weight: bold;">Předmět</div>
+      <div style="float: right;width:120px;font-weight: bold;">Datum</div>
+      <div style="clear: both;"></div>
+    </div>
+    <% @messages.each do |message| %>
+      <div style="margin-top: 5px;">
+        <div id="message_<%=message.id%>" class="message_row">
+          <div class="indent" style="float: left;width:200px;"><%=message.sender.display%></div>
+          <div style="float: left;"><%=message.subject %></div>
+          <div style="float: right;width:120px;"><%=message.created_at %></div>
+        </div>
+        <div style="clear: both;"></div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<div id="messageMenu" class="context_menu" style="display: none;">
+  <div class="item">
+    <table class="reply">
+      <tr>
+        <td><%=image_tag 'icons/email_reply.png' %></td>
+        <td>Odpovědět</td>
+      </tr>
+    </table>
+  </div>
+  <div class="item">
+    <table class="delete">
+      <tr>
+        <td><%=image_tag 'icons/email_delete.png' %></td>
+        <td>Smazat</td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div id="folderMenu" class="context_menu" style="display: none;">
+  <div class="item">
+    <table>
+      <tr>
+        <td><%=image_tag 'icons/folder_wrench.png' %></td>
+        <td>Přejmenovat</td>
+      </tr>
+    </table>
+  </div>
+  <div class="item">
+    <table>
+      <tr>
+        <td><%=image_tag 'icons/folder_delete.png' %></td>
+        <td>Smazat</td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div id="msgboxed" style="display: none;"><div id="msgboxeddata"></div></div>

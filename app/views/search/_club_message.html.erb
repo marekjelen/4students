@@ -1,0 +1,4 @@
+<div style="border: 1px solid silver;margin-bottom:5px;">
+  <div style="border-bottom: 1px solid silver;padding:5px;"><b><%= club_message.user.display %></b> ( <%= club_message.created_at %>; <%= link_to(club_message.club.name, :controller => 'club', :action => 'index', :id => club_message.club) %> )</div>
+  <div style="padding:5px;"><%= club_message.message %></div>
+</div>

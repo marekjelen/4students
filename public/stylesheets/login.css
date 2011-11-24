@@ -1,0 +1,75 @@
+body{
+	padding: 0px;
+	margin: 0px;
+	background-image: url('../images/background.gif');
+	background-repeat: repeat-x;
+	text-align: center;
+}
+
+.input_box{
+    width: 180px;
+    padding-left: 5px;
+}
+
+#container{
+    text-align: center;
+    margin-top: 6px;
+    width: 930px;
+}
+
+#header{
+    margin-bottom: 30px;
+    width: 930px;
+    height: 150px;
+}
+
+#profile{
+    display: none;
+}
+
+#sections{
+	background-image: url('../images/sections.gif');
+	width: 675px;
+	height: 31px;
+    margin: auto;
+    float: none;
+}
+
+#logo{
+	background-image: url('../images/logo.gif');
+	width: 468px;
+	height: 74px;
+    margin: auto;
+    float: none;
+    margin-top: 15px;
+}
+
+#content{
+    text-align: left;
+}
+
+#login_box{
+	float: left;
+}
+
+#login_table{
+    float: left;
+    width: 180px;
+}
+
+#login_table td input.login_input{
+	margin-left: 10px;
+	width: 150px;
+}
+
+#login_login{
+    float: left;
+    padding-top: 20px;
+    padding-left: 10px;
+    text-align: center;
+    width: 85px;
+}
+
+#about_box{
+	float: left;
+}

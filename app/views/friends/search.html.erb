@@ -1,0 +1,15 @@
+<div>
+  Dotaz: <%= params[:phrase] %><br />
+  Nalezených záznamů: 0
+</div>
+<table>
+  <% @users.each do |user| %>
+    <tr>
+      <td rowspan="2"><%= image_tag user.avatar_url(:size => 50)%></td>
+      <td><%= user.display %></td>
+    </tr>
+    <tr>
+      <td><a href="<%= url_for :controller => 'friends', :action => 'add', :id => user.username%>">Přidat do přátel</a></td>
+    </tr>
+  <% end %>
+</table>

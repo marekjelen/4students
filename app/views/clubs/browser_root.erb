@@ -1,0 +1,8 @@
+<% @category.categories.each do |category| %>
+  <% if category.image %>
+    <div>
+      <%= image_tag "clubs/categories/#{category.image}" %>
+      <%= link_to category.name, :controller => 'clubs', :action => 'browser', :id => category.id %>
+    </div>
+  <% end %>
+<% end %>

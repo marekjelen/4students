@@ -1,0 +1,24 @@
+<% if @version %>
+  <h2>Byly přidány nové funkce <% if SYSTEM_VERSION - @user.version > 1 %>1 / <%= @versions %><% end %></h2>
+  <div>
+    <%= partial "profile/versions/version_#{@version}" %>
+  </div>
+  <br />
+  <div style="clear: both;">
+    <a href="<%= url_for :controller => 'profile', :action => 'upgrade' %>">Upgradovat</a>
+    <% if SYSTEM_VERSION - @user.version > 1 %>
+      <a href="<%= url_for :controller => 'profile', :action => 'version', :id => 'all' %>">Všechny</a>
+    <% end %>
+  </div>
+<% else %>
+  <h2>Byly přidány nové funkce</h2>
+  <% @versions.each do |version| %>
+    <div>
+      <%= partial "profile/versions/version_#{version}" %>
+    </div>
+  <% end %>
+  <br />
+  <div style="clear: both;">
+    <a href="<%= url_for :controller => 'profile', :action => 'upgrade', :id => 'all' %>">Upgradovat</a>
+  </div>
+<% end %>

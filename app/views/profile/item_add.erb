@@ -1,0 +1,6 @@
+<% form_tag :action => 'item_create' do %>
+  <%= hidden_field_tag :section, params[:id] %>
+  Jméno údaje <%= text_field_tag :name, flash[:name] %><br />
+  Hodnota <%= text_field_tag :value, flash[:value] %><br />
+  <%= submit_tag 'Vytvořit' %>
+<% end %>

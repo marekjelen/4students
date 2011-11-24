@@ -1,0 +1,6 @@
+cz:
+  storage:
+    upload:
+      title: Nahrát soubor
+    browser:
+      foldercontent: Obsah složky

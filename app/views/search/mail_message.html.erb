@@ -1,0 +1,15 @@
+<% form_tag :action => 'mail_message' do %>
+  Hledej: <%= text_field_tag 'query', @query %>
+  <%= submit_tag 'Hledat' %>
+<% end %>
+
+<% if @query and not @query.empty? %>
+  <% if @mail_messages %>
+    <h2>Výsledky vyhledávání:</h2>
+    <%= render :partial => 'mail_message', :collection => @mail_messages %>
+  <% elsif flash['solr_down'] %>
+    <h2>Vyhledávací server je mimo provoz. Opakujte hledání prosím později.</h2>
+  <% else %>
+    <h2>Nebyly nalezeny žádné zprávy.</h2>
+  <% end %>
+<% end %>

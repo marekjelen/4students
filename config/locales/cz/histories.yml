@@ -1,0 +1,23 @@
+cz:
+  history:
+    feeds:
+      messages:
+        login:
+          api: se přihlásil do systému pomocí API key
+          basic: se přihlásil do systému pomocí BASIC authetifikace
+          first: se úplně poprvé přihlásil do systému
+          login: se přihlásil do systému pomocí formuláře
+          remember: se přihlásil do systému pomocí funkce pamatovat si přihlášení
+        status: "{{status}}"
+        friendships:
+          new: je nyní kamarád s uživatelem {{friend}}
+    messages:
+      login:
+        api: se přihlásil do systému pomocí API key
+        basic: se přihlásil do systému pomocí BASIC authetifikace
+        first: se úplně poprvé přihlásil do systému
+        login: se přihlásil do systému pomocí formuláře
+        remember: se přihlásil do systému pomocí funkce pamatovat si přihlášení
+      status: "{{status}}"
+      friendships:
+        new: je nyní kamarád s uživatelem <a href="/profile/display/{{id}}" class="modra">{{friend}}</a>

@@ -1,0 +1,57 @@
+<div style="float:left;width:310px;">
+  <% partial 'shared/lista', :title => 'public.user' do %>
+    <% if @user %>
+      <%= I18n.t :'public.logged_in_as', :user => @user.username %>
+      <%= I18n.t :'public.enter_profile', :link => ( url_for :controller => 'profile', :action => 'report') %>
+      <%= I18n.t :'public.logout', :link => ( url_for :controller => 'public', :action => 'logout') %>
+    <% else %>
+      <% form_tag(:controller => 'public', :action => 'login') do %>
+        <div style="text-align: center;margin-bottom: 10px;">
+          <% if flash[:loginFailed] %>
+            <strong>Přihlášení se nezdařilo.</strong>
+            <br /><br />
+          <% end %>
+          Pokud ještě nemáte vytvořený svůj účet,<br />
+          můžete tak učinit
+          <strong><a href="<%= url_for :controller => 'public', :action => 'signup' %>" class="modra">zde</a></strong>.
+        </div>
+
+        <table summary="Table design for login form" id="login_table" style="width:100%;">
+          <tr>
+            <td><strong><%= I18n.t :'public.username' %>:</strong></td>
+            <td><%= text_field_tag 'username' %></td>
+          </tr>
+          <tr>
+            <td><strong><%= I18n.t :'public.password' %>:</strong></td>
+            <td><%= password_field_tag 'password' %> </td>
+          </tr>
+          <tr>
+            <td colspan="2" align="center">
+              <table summary="Table design for button to remember login">
+                <tr>
+                  <td><%= check_box_tag 'remember' %></td>
+                  <td><strong><%= I18n.t :'public.login_remember' %></strong></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" align="center"><%= image_submit_tag('login.gif') %></td>
+          </tr>
+        </table>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% partial 'shared/lista', :title => 'public.project_about', :size => 'small', :float => 'left' do %>
+    <%= I18n.t :'public.project_about_text' %>
+  <% end %>
+</div>
+<div style="float:left;width:620px;">
+<% partial 'shared/lista', :title => 'public.history', :size => 'small' do %>
+  <table>
+    <% @history.each do |history| %>
+      <%= t("history.messages.#{history.key}", JSON.parse(history.options))%>
+    <% end %>
+  </table>
+<% end %>
+</div>

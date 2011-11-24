@@ -1,0 +1,23 @@
+cz:
+    profile:
+        history:
+            title: Historie
+            public:
+                title: Veřejná historie
+                submit: Uložit nastavení
+                warning: Vybrané druhy historie budou uváděny na úvodní stránce v globální historii systému. Tyto údaje budou viditelné všem, nejen přihlášeným uživatelům.
+                items:
+                    login: historie přihlášení do systému
+                    status: historie změn statusů
+        status: Můj status
+        friends:
+            requests: Žádosti o přátelství
+            request: žádost
+            find:
+                title: Najít přátele
+                username: Podle uživatelského jména
+                email: Podle e-mailu
+                name: Podle jména
+            my: Moji přátelé
+
+

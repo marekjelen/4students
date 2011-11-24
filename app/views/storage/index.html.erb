@@ -1,0 +1,8 @@
+<% partial 'shared/lista', :title => 'storage.upload.title', :size => 'small' do %>
+  <%# form_tag url_for(:controller => 'storage', :action => 'upload'),:multipart => true do %>
+  <% form_for :upload, :url => { :action => 'upload'}, :html => {:multipart => true} do |f| %>
+    <%= f.file_field 'file' %>
+    <br />
+    <%= f.submit 'Uložit soubor na server' %>
+  <% end %>
+<% end %>

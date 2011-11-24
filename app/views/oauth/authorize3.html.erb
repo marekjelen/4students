@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <title>Komunity.4Students.CZ</title>
+  <link REL="SHORTCUT ICON" HREF="/favicon.ico">
+  <!-- StyleSheets -->
+  <%= stylesheet_link_tag "main" %>
+  <%= stylesheet_link_tag "login" %>
+  <%= yield :styles %>
+  <!-- JavaScript -->
+  <%= javascript_include_tag "jquery" %>
+  <%= javascript_include_tag "swfobject" %>
+  <%= javascript_include_tag "application" %>
+</head>
+<body>
+<div id="container">
+  <div id="header">
+    <div id="sections"></div>
+    <div id="logo"></div>
+  </div>
+  <div id="content">
+    <div style="float:left;width:310px;margin-left: 233px;">
+      <% partial 'shared/lista', :text => 'Aplikace' do %>
+        <table>
+          <tr>
+            <td>Aplikace:</td>
+            <td><%= @consumer[:key] %></td>
+          </tr>
+        </table>
+      <% end %>
+    </div>
+    <div style="float:left;width:155px;">
+      <% partial 'shared/lista', :text => 'Přístup', :size => 'little' do %>
+          <div><%= link_to 'Povolit dočasně přístup', :controller => :oauth, :action => :authorize4, :oauth_token => params[:oauth_token], :oauth_callback => params[:oauth_callback], :type => 'allow'%></div>
+          <br />
+          <div><%= link_to 'Povolit aplikaci', :controller => :oauth, :action => :authorize4, :oauth_token => params[:oauth_token], :oauth_callback => params[:oauth_callback], :type => 'remember'%></div>
+          <br />
+          <div><%= link_to 'Zamítnout přístup', :controller => :oauth, :action => :authorize4, :oauth_token => params[:oauth_token], :oauth_callback => params[:oauth_callback], :type => 'deny'%></div>
+      <% end %>
+    </div>
+  </div>
+</div>
+</body>
+</html>

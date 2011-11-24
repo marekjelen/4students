@@ -1,0 +1,34 @@
+<% partial 'shared/lista', :text => 'Jsem členem' do %>
+  <table>
+    <% @user.clubs_active.each do |club| %>
+      <tr>
+        <td><%= link_to club.name, :controller => 'club', :id => club.id %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+<% partial 'shared/lista', :text => 'Čekám na schválení členství' do %>
+  <table>
+    <% @user.clubs_requests.each do |club| %>
+      <tr>
+        <td><%= link_to club.name, :controller => 'club', :id => club.id %></td>
+        <td>[ <%= link_to 'zrušit', :controller => 'club', :action => 'signout', :id => club.id %> ]</td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+<% partial 'shared/lista', :text => 'Jsem zván do klubů' do %>
+  <table>
+    <% @user.clubs_invitations.each do |club| %>
+      <tr>
+        <td><%= link_to club.name, :controller => 'club', :id => club.id %></td>
+        <td>
+          [ 
+            <%= link_to 'potvrdit', :controller => 'club', :action => 'join', :id => club.id %> |
+            <%= link_to 'zrušit', :controller => 'club', :action => 'signout', :id => club.id %>
+          ]
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

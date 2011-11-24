@@ -1,0 +1,12 @@
+<% form_tag do %>
+  Login zvaného člena <%= text_field_tag :member, params[:member] %> <%= submit_tag 'Pozvat' %>
+<% end %>
+<% if not @mem %>
+  Uživatel nebyl nalezen.
+<% else %>
+  <% if @exists %>
+    Uživatele <%= @mem.display %> nelze pozvat.
+  <% else %>
+    Uživatel <%= @mem.display %> byl pozván.
+  <% end %>
+<% end %>
